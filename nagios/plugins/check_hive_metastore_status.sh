@@ -36,7 +36,9 @@ if [[ "$SEC_ENABLED" == "true" ]]; then
 fi
 HCAT_URL=-Dhive.metastore.uris="thrift://$HOST:$PORT"
 export JAVA_HOME=$JAVA_HOME
-out=`hcat $HCAT_URL -e "show databases" 2>&1`
+# PHD2.0.x/PHD2.1.x does not include hcat
+#out=`hcat $HCAT_URL -e "show databases" 2>&1`
+out=`hive $HCAT_URL -e "show databases" 2>&1`
 if [[ "$?" -ne 0 ]]; then
   echo "CRITICAL: Error accessing Hive Metastore status [$out]";
   exit 2;
